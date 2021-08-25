@@ -3,3 +3,21 @@
   height: 200px;
   background-color: black;
 }
+
+.form-control.red-frame {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 25%);
+
+  &:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 25%);
+  }
+}
+
+.message.error {
+  color: #dc3545;
+}
+
+.message.succes {
+  color: hsl(30, 90%, 65%);
+}
