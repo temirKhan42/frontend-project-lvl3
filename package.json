@@ -36,6 +36,9 @@
   },
   "dependencies": {
     "bootstrap": "^5.1.0",
-    "clean-webpack-plugin": "*"
+    "clean-webpack-plugin": "*",
+    "i18next": "^20.4.0",
+    "on-change": "^3.0.2",
+    "yup": "^0.32.9"
   }
 }
