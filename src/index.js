@@ -1,3 +1,4 @@
 import './style.scss';
+import app from './app/app.js';
 
-console.log('Hello Eslint');
+app();
