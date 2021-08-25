@@ -7,10 +7,12 @@
   <title>Fronten project lvl3</title>
 </head>
 <body>
-  <form action="forma">
-    <label for="rss-input">Ссылка RSS</label>
-    <input type="text" id="rss-input">
-    <button>Добавить</button>
+  <form class="form-rss">
+    <label for="url-input">Ссылка RSS</label>
+    <input  id="url-input" autofocus required name="url" aria-label="url" class="form-control w-100" placeholder="ссылка RSS" autocomplete="off">
+    <button id='url-button' name="submit">Добавить</button>
   </form>
+  <p>Пример: https://ru.hexlet.io/lessons.rss</p>
+  <p class="message"></p>
 </body>
 </html>
