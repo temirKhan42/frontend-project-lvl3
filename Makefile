@@ -1,6 +1,6 @@
 # Makefile
 lint:
-	npx eslint .
+	npx eslint ./src
 
 webpackServer:
 	npm run startServer
