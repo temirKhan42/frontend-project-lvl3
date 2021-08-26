@@ -1,40 +1,29 @@
 import * as yup from 'yup';
 
+yup.setLocale({
+  string: {
+    url: 'URL invalid',
+  },
+});
+
 const schema = yup.object().shape({
   website: yup.string().url(),
 });
 
 const checkValidation = (url, stateWatcher) => {
-  const { addingUrlProcess, addedUrls } = stateWatcher;
+  const { addingUrlProcess: urlProcess, addedUrls } = stateWatcher;
 
   return schema
     .validate({ website: url })
-    .catch(() => {
-      addingUrlProcess.error = 'urlInvalid';
-      throw new Error('url invalid');
-    })
-    .then(() => {
-      fetch(url);
-    })
     .catch((err) => {
-      if (err.message === 'url invalid') {
-        throw err;
-      } else {
-        addingUrlProcess.error = 'rssInvalid';
-        throw new Error('rss invalid');
-      }
+      urlProcess.error = 'urlInvalid';
+      throw err;
     })
     .then(() => {
       if (addedUrls.includes(url)) {
-        throw new Error('rss exists');
+        urlProcess.error = 'rssExists';
+        throw new Error('RSS exists');
       }
-      return true;
-    })
-    .catch((err) => {
-      if (err.message === 'rss exists') {
-        addingUrlProcess.error = 'rssExists';
-      }
-      throw err;
     });
 };
 
@@ -50,10 +39,7 @@ const render = (processState, stateWatcher, elements, i18n) => {
 
     checkValidation(urlProcess.value, stateWatcher)
       .then(() => { urlProcess.state = 'valid'; })
-      .catch((err) => {
-        console.log(err.message);
-        urlProcess.state = 'novalid';
-      });
+      .catch(() => { urlProcess.state = 'novalid'; });
   } else if (processState === 'valid') {
     input.disabled = false;
     button.disabled = false;

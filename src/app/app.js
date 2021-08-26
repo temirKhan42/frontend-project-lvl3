@@ -3,13 +3,7 @@ import onChange from 'on-change';
 import resources from './locales/locales.js';
 import render from './view.js';
 
-export default () => {
-  i18n.init({
-    lng: 'ru',
-    debug: false,
-    resources,
-  });
-
+const startApp = () => {
   const state = {
     addingUrlProcess: {
       value: '',
@@ -43,6 +37,13 @@ export default () => {
     const formData = new FormData(e.target);
     const value = formData.get('url');
     stateWatcher.addingUrlProcess.value = value;
-    console.log(stateWatcher.addedUrls);
   });
+};
+
+export default () => {
+  i18n.init({
+    lng: 'ru',
+    debug: false,
+    resources,
+  }).then(() => startApp());
 };
