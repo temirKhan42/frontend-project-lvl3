@@ -11,13 +11,19 @@ const startApp = () => {
       state: '', // validation, valid, novalid
     },
     addedUrls: [],
+    main: {
+      feeds: [],
+      posts: [],
+    },
   };
 
   const elements = {
-    form: document.querySelector('.form-rss'),
+    form: document.querySelector('.rss-form'),
     input: document.getElementById('url-input'),
-    button: document.getElementById('url-button'),
-    messageElem: document.querySelector('.message'),
+    button: document.querySelector('.btn.btn-lg'),
+    messageElem: document.querySelector('.feedback'),
+    postsContainer: document.querySelector('.container-xxl .row .posts .card'),
+    feedsContainer: document.querySelector('.container-xxl .row .feeds .card'),
   };
 
   const stateWatcher = onChange(state, (path, currentValue) => {
