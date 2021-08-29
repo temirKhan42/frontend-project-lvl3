@@ -14,10 +14,14 @@
   }
 }
 
-.message.error {
+.feedback.text-danger {
   color: #dc3545;
 }
 
-.message.succes {
-  color: hsl(30, 90%, 65%);
+.feedback.text-succes {
+  color: #198754;
+}
+
+.card.border-0.invisible {
+  display: none;
 }
