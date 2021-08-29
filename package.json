@@ -35,6 +35,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "clean-webpack-plugin": "*",
     "i18next": "^20.4.0",
