@@ -1,5 +1,7 @@
 import * as yup from 'yup';
 import axios from 'axios';
+import onChange from 'on-change';
+import _ from 'lodash';
 
 yup.setLocale({
   string: {
@@ -127,8 +129,6 @@ const parsingRssToDom = (dataRss) => {
   if (dataDom.documentElement.tagName !== 'rss') {
     throw new Error('RSS invalid');
   }
-
-  console.log(dataDom);
   return dataDom;
 };
 
@@ -208,4 +208,86 @@ const render = (processState, stateWatcher, elements, i18n) => {
   }
 };
 
-export default render;
+const getNormolizePosts = (posts) => posts.map((post) => {
+  const newPost = {};
+  Object.entries(post)
+    .forEach(([key, val]) => {
+      if (key === 'id' || key === 'postId') {
+        return;
+      }
+      newPost[key] = val;
+    });
+  return newPost;
+});
+
+const getDiffPostsWithoutNormolize = (fakePosts, diffs) => (
+  fakePosts.filter((fakePost) => diffs.some((normolizedPost) => (
+    _.isEqualWith(fakePost, normolizedPost, (obj1, obj2) => {
+      if (obj1.title === obj2.title
+        && obj1.description === obj2.description
+        && obj1.link === obj2.link) {
+        return true;
+      }
+      return false;
+    })
+  )))
+);
+
+const getPostsDifference = (realPosts, fakePosts) => {
+  const realNormPosts = getNormolizePosts(realPosts);
+  const fakeNormPosts = getNormolizePosts(fakePosts);
+  const diffs = _.differenceWith(fakeNormPosts, realNormPosts, _.isEqual);
+
+  if (diffs.length === 0) {
+    throw new Error('No Renewal Data');
+  }
+  return getDiffPostsWithoutNormolize(fakePosts, diffs);
+};
+
+const checkRenewalDataOfUrls = (stateWatcher, elements) => {
+  const fakeState = {
+    main: {
+      feeds: [],
+      posts: [],
+    },
+  };
+
+  const currentUrls = stateWatcher.addedUrls;
+  const realPosts = stateWatcher.main.posts;
+
+  const promise = new Promise((resolve) => {
+    const result = currentUrls.forEach((url) => makeRequest(url)
+      .then((response) => parsingRssToDom(response))
+      .then((response) => buildRssContainerInState(response, fakeState))
+      .then(() => getPostsDifference(realPosts, fakeState.main.posts))
+      .then((diffPosts) => diffPosts.forEach((post) => realPosts.push(post)))
+      .then(() => renderRssContainerInDom(stateWatcher, elements))
+      .catch(() => {}));
+
+    resolve(result);
+  });
+
+  promise
+    .then(() => setTimeout(() => checkRenewalDataOfUrls(stateWatcher, elements), 5000))
+    .catch(() => {});
+};
+
+export default (value, state, elements, i18n) => {
+  const stateWatcher = onChange(state, (path, currentValue) => {
+    if (path === 'addingUrlProcess.value' && currentValue === '') {
+      return;
+    }
+
+    if (path === 'addingUrlProcess.value') {
+      stateWatcher.addingUrlProcess.state = 'validation';
+    } else if (path === 'addingUrlProcess.state') {
+      render(currentValue, stateWatcher, elements, i18n);
+    } else if (path === 'addedUrls') {
+      if (currentValue.length === 1) {
+        checkRenewalDataOfUrls(stateWatcher, elements);
+      }
+    }
+  });
+
+  stateWatcher.addingUrlProcess.value = value;
+};
