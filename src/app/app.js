@@ -1,6 +1,9 @@
 import i18n from 'i18next';
+import onChange from 'on-change';
 import resources from './locales/locales.js';
-import view from './view.js';
+import render from './view.js';
+import checkRenewalDataOfUrls from './checkRenewallData.js';
+import onModalVisible from './renderModal.js';
 
 const startApp = () => {
   const state = {
