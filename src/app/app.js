@@ -43,6 +43,24 @@ const startApp = () => {
     modalBtnClose: document.querySelector('#modal .btn-close'),
   };
 
+  const stateWatcher = onChange(state, (path, currentValue) => {
+    if (path === 'addingUrlProcess.value' && currentValue === '') {
+      return;
+    }
+
+    if (path === 'addingUrlProcess.value') {
+      stateWatcher.addingUrlProcess.state = 'validation';
+    } else if (path === 'addingUrlProcess.state') {
+      render(currentValue, stateWatcher, elements, i18n);
+    } else if (path === 'addedUrls') {
+      if (currentValue.length === 1) {
+        checkRenewalDataOfUrls(stateWatcher, elements);
+      }
+    } else if (path === 'uiState.modal.visibility' && currentValue === 'visible') {
+      onModalVisible(stateWatcher, elements);
+    }
+  });
+
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
