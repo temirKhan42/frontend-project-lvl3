@@ -17,6 +17,14 @@ const startApp = () => {
       feeds: [],
       posts: [],
     },
+    uiState: {
+      modal: {
+        visibility: 'invisible',
+        id: null,
+        postId: null,
+      },
+      posts: [],
+    },
   };
 
   const elements = {
