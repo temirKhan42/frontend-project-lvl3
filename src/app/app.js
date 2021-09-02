@@ -65,7 +65,23 @@ const startApp = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const value = formData.get('url');
-    view(value, state, elements, i18n);
+    stateWatcher.addingUrlProcess.value = value;
+  });
+
+  elements.listPosts.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (e.target.tagName !== 'BUTTON') return;
+    const dataId = e.target.getAttribute('data-id');
+    const [id, postId] = dataId.split('.').map((idPart) => parseInt(idPart, 10));
+
+    stateWatcher.uiState.modal.id = id;
+    stateWatcher.uiState.modal.postId = postId;
+    stateWatcher.uiState.modal.visibility = 'visible';
+  });
+
+  elements.modal.addEventListener('hidden.bs.modal', (e) => {
+    e.preventDefault();
+    stateWatcher.uiState.modal.visibility = 'invisible';
   });
 };
 
