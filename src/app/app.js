@@ -34,6 +34,13 @@ const startApp = () => {
     messageElem: document.querySelector('.feedback'),
     postsContainer: document.querySelector('.container-xxl .row .posts .card'),
     feedsContainer: document.querySelector('.container-xxl .row .feeds .card'),
+    listFeeds: document.querySelector('.feeds > .card > .list-group'),
+    listPosts: document.querySelector('.posts > .card > .list-group'),
+    modal: document.getElementById('modal'),
+    modalTitle: document.querySelector('#modal .modal-content .modal-title'),
+    modalDescription: document.querySelector('#modal .modal-content .modal-body'),
+    modalLink: document.querySelector('#modal .modal-footer .full-article'),
+    modalBtnClose: document.querySelector('#modal .btn-close'),
   };
 
   elements.form.addEventListener('submit', (e) => {
