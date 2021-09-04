@@ -27,7 +27,7 @@ const renderRssContainerInDom = (stateWatcher, elements, i18n) => {
     descriptionElem.textContent = feed.description;
 
     li.append(titleElem, descriptionElem);
-    listElemFeeds.prepend(li);
+    listElemFeeds.append(li);
   });
 
   main.posts.forEach((post) => {
@@ -53,7 +53,7 @@ const renderRssContainerInDom = (stateWatcher, elements, i18n) => {
     buttonElem.textContent = i18n.t('postContainer.buttonNames');
 
     li.append(linkElem, buttonElem);
-    listElemPosts.prepend(li);
+    listElemPosts.append(li);
   });
 };
 

@@ -15,13 +15,20 @@ const getCorrectedObject = (obj) => {
 
 const buildRssContainerInState = (dataDom, stateWatcher) => {
   const channel = dataDom.documentElement.querySelector('channel');
-  const { feeds, posts } = stateWatcher.main;
   const uiPosts = stateWatcher.uiState.posts;
 
+  const currentFeeds = [];
+  const currentPosts = [];
   const id = stateWatcher.addedUrls.length + 1;
 
   const iter = (elem, postId = 0) => {
-    const obj = { id };
+    const obj = {
+      id,
+      title: '',
+      description: '',
+      link: '',
+    };
+
     [...elem.children].forEach((child) => {
       if (child.tagName === 'title') {
         obj.title = child.innerHTML;
@@ -36,7 +43,7 @@ const buildRssContainerInState = (dataDom, stateWatcher) => {
 
     if (elem.tagName === 'item') {
       correctedObj.postId = postId;
-      posts.push(correctedObj);
+      currentPosts.push(correctedObj);
       const uiPostObj = {
         id,
         postId,
@@ -46,7 +53,7 @@ const buildRssContainerInState = (dataDom, stateWatcher) => {
       return;
     }
 
-    feeds.push(correctedObj);
+    currentFeeds.push(correctedObj);
     let itemId = 0;
     [...elem.children].forEach((child) => {
       if (child.tagName === 'item') {
@@ -56,6 +63,9 @@ const buildRssContainerInState = (dataDom, stateWatcher) => {
   };
 
   iter(channel);
+
+  stateWatcher.main.feeds.splice(0, 0, ...currentFeeds);
+  stateWatcher.main.posts.splice(0, 0, ...currentPosts);
 };
 
 export default buildRssContainerInState;
