@@ -61,7 +61,6 @@ const startApp = () => {
     }
   });
 
-  console.log(elements.form);
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -87,10 +86,8 @@ const startApp = () => {
   });
 };
 
-export default () => {
-  i18n.init({
-    lng: 'ru',
-    debug: false,
-    resources,
-  }).then(() => startApp());
-};
+export default i18n.init({
+  lng: 'ru',
+  debug: false,
+  resources,
+}).then(() => startApp());
