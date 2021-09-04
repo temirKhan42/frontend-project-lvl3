@@ -1,4 +1,4 @@
-const renderRssContainerInDom = (stateWatcher, elements) => {
+const renderRssContainerInDom = (stateWatcher, elements, i18n) => {
   const { main } = stateWatcher;
 
   if (main.feeds.length === 0 || main.posts.length === 0) {
@@ -50,7 +50,7 @@ const renderRssContainerInDom = (stateWatcher, elements) => {
     buttonElem.setAttribute('data-id', dataId);
     buttonElem.setAttribute('data-bs-toggle', 'modal');
     buttonElem.setAttribute('data-bs-target', '#modal');
-    buttonElem.textContent = 'Просмотр';
+    buttonElem.textContent = i18n.t('postContainer.buttonNames');
 
     li.append(linkElem, buttonElem);
     listElemPosts.prepend(li);

@@ -72,6 +72,7 @@ const startApp = () => {
     e.preventDefault();
     if (e.target.tagName !== 'BUTTON') return;
     const dataId = e.target.getAttribute('data-id');
+    e.target.disabled = 'true';
     const [id, postId] = dataId.split('.').map((idPart) => parseInt(idPart, 10));
 
     stateWatcher.uiState.modal.id = id;
