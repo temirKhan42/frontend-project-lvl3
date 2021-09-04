@@ -4,8 +4,7 @@ import i18n from 'i18next';
 import app from './src/app/app.js';
 import resources from './src/app/locales/locales.js';
 
-// app();
-const runApp = async () => {
+const runApp = () => {
   const i18nInstance = i18n.createInstance();
   i18nInstance.init({
     lng: 'ru',
@@ -13,5 +12,7 @@ const runApp = async () => {
     resources,
   }).then(() => app(i18nInstance));
 };
+
+runApp();
 
 export default runApp;

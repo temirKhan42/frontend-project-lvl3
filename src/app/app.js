@@ -1,6 +1,4 @@
-// import i18n from 'i18next';
 import onChange from 'on-change';
-// import resources from './locales/locales.js';
 import render from './view.js';
 import checkRenewalDataOfUrls from './checkRenewallData.js';
 import onModalVisible from './renderModal.js';
@@ -85,11 +83,5 @@ const startApp = (i18n) => {
     stateWatcher.uiState.modal.visibility = 'invisible';
   });
 };
-
-// export default i18n.init({
-//   lng: 'ru',
-//   debug: false,
-//   resources,
-// }).then(() => startApp());
 
 export default startApp;
