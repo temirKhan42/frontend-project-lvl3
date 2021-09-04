@@ -2,4 +2,4 @@ import './src/style.scss';
 import 'bootstrap/js/dist/modal.js';
 import app from './src/app/app.js';
 
-app();
+export default app();
