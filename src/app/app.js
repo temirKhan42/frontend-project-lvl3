@@ -61,7 +61,7 @@ const startApp = () => {
     }
   });
 
-  console.log(JSON.stringify(document.body));
+  console.log(elements.form);
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
