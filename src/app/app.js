@@ -61,6 +61,7 @@ const startApp = () => {
     }
   });
 
+  console.log(document.body);
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
