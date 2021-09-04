@@ -8,7 +8,7 @@ module.exports = merge(common, {
   mode: 'production',
   output: {
     filename: '[name].[hash].js',
-    path: path.resolve(__dirname, 'code'),
+    path: path.resolve(__dirname, 'dist'),
     assetModuleFilename: './imgs/[name].[hash].[ext]',
   },
   plugins: [
