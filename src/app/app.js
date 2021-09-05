@@ -1,9 +1,11 @@
 import onChange from 'on-change';
+import i18next from 'i18next';
 import render from './view.js';
 import checkRenewalDataOfUrls from './checkRenewallData.js';
 import onModalVisible from './renderModal.js';
+import resources from './locales/locales.js';
 
-const startApp = (i18n) => {
+const runApp = (i18n) => {
   const state = {
     addingUrlProcess: {
       value: '',
@@ -84,4 +86,11 @@ const startApp = (i18n) => {
   });
 };
 
-export default startApp;
+export default () => {
+  const i18nInstance = i18next.createInstance();
+  i18nInstance.init({
+    lng: 'ru',
+    debug: false,
+    resources,
+  }).then(() => runApp(i18nInstance));
+};
